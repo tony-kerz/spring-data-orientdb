@@ -32,7 +32,9 @@ public abstract class AbstractOrientDatabaseFactory<T> implements OrientDatabase
 
     /** The max pool size. */
     protected int maxPoolSize = DEFAULT_MAX_POOL_SIZE;
-
+    
+    protected int maxPartitionSize = DEFAULT_MAX_PARTITION_SIZE;
+    
     protected Boolean autoCreate;
 
     protected String url;

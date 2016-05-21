@@ -1,12 +1,25 @@
 package org.springframework.data.orient.commons.core;
 
-import com.orientechnologies.common.exception.OException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Callable;
+
+import org.springframework.data.orient.commons.repository.DetachMode;
+
+import com.orientechnologies.common.exception.OSystemException;
 import com.orientechnologies.orient.core.cache.OLocalRecordCache;
 import com.orientechnologies.orient.core.command.OCommandOutputListener;
 import com.orientechnologies.orient.core.command.OCommandRequest;
 import com.orientechnologies.orient.core.db.ODatabase;
 import com.orientechnologies.orient.core.db.ODatabaseListener;
-import com.orientechnologies.orient.core.db.record.OIdentifiable;
 import com.orientechnologies.orient.core.dictionary.ODictionary;
 import com.orientechnologies.orient.core.exception.OTransactionException;
 import com.orientechnologies.orient.core.hook.ORecordHook;
@@ -16,24 +29,15 @@ import com.orientechnologies.orient.core.intent.OIntent;
 import com.orientechnologies.orient.core.metadata.OMetadata;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
 import com.orientechnologies.orient.core.metadata.security.OSecurityUser;
-import com.orientechnologies.orient.core.metadata.security.OUser;
 import com.orientechnologies.orient.core.query.OQuery;
 import com.orientechnologies.orient.core.record.impl.ODocument;
 import com.orientechnologies.orient.core.sql.OCommandSQL;
 import com.orientechnologies.orient.core.sql.query.OSQLQuery;
 import com.orientechnologies.orient.core.sql.query.OSQLSynchQuery;
-import com.orientechnologies.orient.core.storage.ORecordCallback;
 import com.orientechnologies.orient.core.storage.ORecordMetadata;
 import com.orientechnologies.orient.core.storage.OStorage;
 import com.orientechnologies.orient.core.tx.OTransaction;
-import com.orientechnologies.orient.core.version.ORecordVersion;
-import org.springframework.data.orient.commons.repository.DetachMode;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.*;
-import java.util.concurrent.Callable;
+//import com.orientechnologies.orient.core.version.ORecordVersion;
 
 public abstract class AbstractOrientOperations<T> implements OrientOperations<T> {
     //private static final Logger logger = LoggerFactory.getLogger(AbstractOrientOperations.class);
@@ -81,7 +85,7 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
         return dbf.db().get(attribute);
     }
 
-    @Override
+    //@Override
     public <DB extends ODatabase<T>> DB set(ODatabase.ATTRIBUTES attribute, Object value) {
         return dbf.db().set(attribute, value);
     }
@@ -116,10 +120,10 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
         return dbf.db().unregisterHook(hook);
     }
 
-    @Override
-    public ORecordHook.RESULT callbackHooks(ORecordHook.TYPE type, OIdentifiable id) {
-        return dbf.db().callbackHooks(type, id);
-    }
+//    @Override
+//    public ORecordHook.RESULT callbackHooks(ORecordHook.TYPE type, OIdentifiable id) {
+//        return dbf.db().callbackHooks(type, id);
+//    }
 
     @Override
     public void backup(OutputStream out, Map<String, Object> options, Callable<Object> callable, OCommandOutputListener listener, int compressionLevel, int bufferSize) throws IOException {
@@ -336,10 +340,10 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
         return dbf.db().save(entity, cluster);
     }
 
-    @Override
-    public <S extends T> S save(S entity, ODatabase.OPERATION_MODE mode, boolean forceCreate, ORecordCallback<? extends Number> recordCallback, ORecordCallback<ORecordVersion> recordUpdatedCallback) {
-        return dbf.db().save(entity, mode, forceCreate, recordCallback, recordUpdatedCallback);
-    }
+//    @Override
+//    public <S extends T> S save(S entity, ODatabase.OPERATION_MODE mode, boolean forceCreate, ORecordCallback<? extends Number> recordCallback, ORecordCallback<ORecordVersion> recordUpdatedCallback) {
+//        return dbf.db().save(entity, mode, forceCreate, recordCallback, recordUpdatedCallback);
+//    }
 
     @Override
     public long countClass(Class<?> clazz) {
@@ -405,7 +409,7 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
             }
         }
 
-        throw new OException("Cluster " + clusterName + " not found");
+        throw new OSystemException("Cluster " + clusterName + " not found");
     }
 
     @Override
@@ -463,20 +467,20 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
         return dbf.db().addCluster(clusterName);
     }
 
-    @Override
-    public void freezeCluster(int iClusterId, boolean throwException) {
-        dbf.db().freezeCluster(iClusterId, throwException);
-    }
+//    @Override
+//    public void freezeCluster(int iClusterId, boolean throwException) {
+//        dbf.db().freezeCluster(iClusterId, throwException);
+//    }
+//
+//    @Override
+//    public void freezeCluster(int iClusterId) {
+//        dbf.db().freezeCluster(iClusterId);
+//    }
 
-    @Override
-    public void freezeCluster(int iClusterId) {
-        dbf.db().freezeCluster(iClusterId);
-    }
-
-    @Override
-    public void releaseCluster(int iClusterId) {
-        dbf.db().releaseCluster(iClusterId);
-    }
+//    @Override
+//    public void releaseCluster(int iClusterId) {
+//        dbf.db().releaseCluster(iClusterId);
+//    }
 
     @Override
     public ODatabase<T> delete(ORID recordId) {
@@ -488,10 +492,10 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
         return dbf.db().delete(entity);
     }
 
-    @Override
-    public ODatabase<T> delete(ORID rid, ORecordVersion version) {
-        return dbf.db().delete(rid, version);
-    }
+//    @Override
+//    public ODatabase<T> delete(ORID rid, ORecordVersion version) {
+//        return dbf.db().delete(rid, version);
+//    }
 
     @Override
     public int getDefaultClusterId() {
@@ -523,10 +527,10 @@ public abstract class AbstractOrientOperations<T> implements OrientOperations<T>
         return dbf.db().getUser();
     }
 
-    @Override
-    public void setUser(OUser user) {
-        dbf.db().setUser(user);
-    }
+//    @Override
+//    public void setUser(OUser user) {
+//        dbf.db().setUser(user);
+//    }
 
     @Override
     @SuppressWarnings("unchecked")

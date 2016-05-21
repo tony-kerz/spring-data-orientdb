@@ -1,10 +1,10 @@
 package org.springframework.data.orient.document;
 
+import org.springframework.data.orient.commons.core.AbstractOrientDatabaseFactory;
+
 import com.orientechnologies.orient.core.db.OPartitionedDatabasePool;
 import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx;
 import com.orientechnologies.orient.core.record.ORecord;
-import com.orientechnologies.orient.core.record.impl.ODocument;
-import org.springframework.data.orient.commons.core.AbstractOrientDatabaseFactory;
 
 /**
  * A specific factory for creating OrientDocumentDatabaseFactory objects that handle {@link com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx}.
@@ -21,7 +21,7 @@ public class OrientDocumentDatabaseFactory extends AbstractOrientDatabaseFactory
 
     @Override
     protected void createPool() {
-        pool = new OPartitionedDatabasePool(getUrl(), getUsername(), getPassword(), maxPoolSize);
+        pool = new OPartitionedDatabasePool(getUrl(), getUsername(), getPassword(), maxPartitionSize, maxPoolSize);
     }
 
     /* (non-Javadoc)
